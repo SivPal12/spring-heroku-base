@@ -30,8 +30,15 @@ public class App {
     public static void main(String[] args) throws Exception {
         configLog4j();
 
+        int port;
+        try {
+            port = Integer.valueOf(System.getenv("PORT"));
+        } catch (NumberFormatException e) {
+            port = 8080;
+        }
+
         LOG.info("Starting server");
-        Server server = new Server(8080);
+        Server server = new Server(port);
         server.setHandler(getServletContextHandler(getContext()));
         server.start();
         LOG.info("Server started");
